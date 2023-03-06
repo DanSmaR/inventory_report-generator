@@ -8,6 +8,7 @@ class SimpleReport:
             oldest_manufacturing_date,
             nearest_expiration_date,
             company,
+            product_qty_by_company
         ) = SimpleReport.get_simple_data(data)
         return f"""Data de fabricação mais antiga: {oldest_manufacturing_date}
 Data de validade mais próxima: {nearest_expiration_date}
@@ -60,6 +61,7 @@ Empresa com mais produtos: {company}"""
             oldest_manufacturing_date.strftime("%Y-%m-%d"),
             nearest_expiration_date.strftime("%Y-%m-%d"),
             most_freq_company,
+            product_qty_by_company
         )
 
     @staticmethod
