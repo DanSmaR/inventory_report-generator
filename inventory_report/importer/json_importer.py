@@ -1,5 +1,5 @@
 import json
-from importer import Importer
+from inventory_report.importer.importer import Importer
 
 
 class JsonImporter(Importer):

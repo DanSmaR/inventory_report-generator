@@ -1,5 +1,5 @@
 import csv
-from importer import Importer
+from inventory_report.importer.importer import Importer
 
 
 class CsvImporter(Importer):

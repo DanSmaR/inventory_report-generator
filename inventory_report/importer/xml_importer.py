@@ -1,5 +1,5 @@
 import xmltodict
-from importer import Importer
+from inventory_report.importer.importer import Importer
 
 
 class XmlImporter(Importer):
