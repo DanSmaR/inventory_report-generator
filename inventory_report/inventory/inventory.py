@@ -15,11 +15,18 @@ class Inventory:
     @classmethod
     def import_data(cls, file_path, report_type):
         report_by_file_type_lookup = {
-            'csv': cls.get_report_from_csv_file,
-            'json': cls.get_report_from_json_file
+            "csv": cls.get_report_from_csv_file,
+            "json": cls.get_report_from_json_file,
         }
-        file_type = str(file_path).split('.')[-1]
-        return report_by_file_type_lookup[file_type](file_path, report_type)
+        try:
+            file_type = str(file_path).split(".")[-1]
+            return report_by_file_type_lookup[file_type](
+                file_path, report_type
+            )
+        except KeyError as err:
+            print(err)
+            print('Incorrect file extension. Must be "csv", "json" or "xml".')
+            return None
 
     @classmethod
     def execute_report_method(cls, report_type, inventory):
@@ -36,9 +43,7 @@ class Inventory:
                 inventory = csv.DictReader(
                     csv_file, delimiter=",", quotechar='"'
                 )
-                return cls.execute_report_method(
-                    report_type, list(inventory)
-                )
+                return cls.execute_report_method(report_type, list(inventory))
         except (IsADirectoryError, FileNotFoundError) as err:
             print(err)
             print("Wrong path name")
@@ -49,9 +54,7 @@ class Inventory:
         try:
             with open(json_file_path) as json_file:
                 inventory = json.load(json_file)
-                return cls.execute_report_method(
-                    report_type, inventory
-                )
+                return cls.execute_report_method(report_type, inventory)
         except (IsADirectoryError, FileNotFoundError) as err:
             print(err)
             print("Wrong path name")
