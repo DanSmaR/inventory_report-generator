@@ -2,7 +2,7 @@ import xmltodict
 from importer import Importer
 
 
-class JsonImporter(Importer):
+class XmlImporter(Importer):
     @staticmethod
     def import_data(xml_file_path):
         file_extension = str(xml_file_path).split(".")[-1]
