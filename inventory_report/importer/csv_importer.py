@@ -3,6 +3,7 @@ from importer import Importer
 
 
 class CsvImporter(Importer):
+    @staticmethod
     def import_data(csv_file_path):
         file_extension = str(csv_file_path).split(".")[-1]
         if file_extension != 'csv':
