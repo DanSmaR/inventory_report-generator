@@ -2,20 +2,20 @@ import datetime
 
 
 class SimpleReport:
-    @staticmethod
-    def generate(data):
+    @classmethod
+    def generate(cls, data):
         (
             oldest_manufacturing_date,
             nearest_expiration_date,
             company,
             product_qty_by_company
-        ) = SimpleReport.get_simple_data(data)
+        ) = cls.get_simple_data(data)
         return f"""Data de fabricação mais antiga: {oldest_manufacturing_date}
 Data de validade mais próxima: {nearest_expiration_date}
 Empresa com mais produtos: {company}"""
 
-    @staticmethod
-    def get_simple_data(data):
+    @classmethod
+    def get_simple_data(cls, data):
         min_exp_days = None
         max_manuf_days = None
         oldest_manufacturing_date = None
@@ -33,7 +33,7 @@ Empresa com mais produtos: {company}"""
             (
                 min_exp_days,
                 nearest_expiration_date,
-            ) = SimpleReport.get_min_expiration_date(
+            ) = cls.get_min_expiration_date(
                 min_exp_days,
                 today_date,
                 item_exp_date,
@@ -43,17 +43,17 @@ Empresa com mais produtos: {company}"""
             (
                 max_manuf_days,
                 oldest_manufacturing_date,
-            ) = SimpleReport.get_max_manuf_date(
+            ) = cls.get_max_manuf_date(
                 max_manuf_days,
                 today_date,
                 item_manufac_date,
                 oldest_manufacturing_date,
             )
 
-            SimpleReport.update_products_qty_by_company(
+            cls.update_products_qty_by_company(
                 item, product_qty_by_company
             )
-        most_freq_company = SimpleReport.get_most_freq_company(
+        most_freq_company = cls.get_most_freq_company(
             product_qty_by_company
         )
 
