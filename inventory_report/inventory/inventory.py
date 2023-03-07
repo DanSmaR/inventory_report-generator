@@ -1,5 +1,6 @@
 import csv
 import json
+import xmltodict
 from inventory_report.reports.complete_report import (
     CompleteReport,
     SimpleReport,
@@ -17,6 +18,7 @@ class Inventory:
         report_by_file_type_lookup = {
             "csv": cls.get_report_from_csv_file,
             "json": cls.get_report_from_json_file,
+            "xml": cls.get_report_from_xml_file,
         }
         try:
             file_type = str(file_path).split(".")[-1]
@@ -55,6 +57,20 @@ class Inventory:
             with open(json_file_path) as json_file:
                 inventory = json.load(json_file)
                 return cls.execute_report_method(report_type, inventory)
+        except (IsADirectoryError, FileNotFoundError) as err:
+            print(err)
+            print("Wrong path name")
+            return None
+
+    @classmethod
+    def get_report_from_xml_file(cls, xml_file_path, report_type):
+        try:
+            with open(xml_file_path, "r") as xml_file:
+                xml_string = xml_file.read()
+                inventory = xmltodict.parse(xml_string)
+                return cls.execute_report_method(
+                    report_type, inventory.get("dataset")["record"]
+                )
         except (IsADirectoryError, FileNotFoundError) as err:
             print(err)
             print("Wrong path name")
