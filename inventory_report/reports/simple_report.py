@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 
 class SimpleReport:
@@ -20,14 +20,14 @@ Empresa com mais produtos: {company}"""
         max_manuf_days = None
         oldest_manufacturing_date = None
         nearest_expiration_date = None
-        today_date = datetime.datetime.today().date()
+        today_date = datetime.today().date()
         product_qty_by_company = dict()
 
         for item in data:
-            item_exp_date = datetime.datetime.strptime(
+            item_exp_date = datetime.strptime(
                 str(item.get("data_de_validade")), "%Y-%m-%d"
             ).date()
-            item_manufac_date = datetime.datetime.strptime(
+            item_manufac_date = datetime.strptime(
                 str(item.get("data_de_fabricacao")), "%Y-%m-%d"
             ).date()
             (
