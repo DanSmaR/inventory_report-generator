@@ -8,11 +8,6 @@ from inventory_report.reports.complete_report import (
 
 
 class Inventory:
-    report_methods_lookup = {
-        "simples": SimpleReport.generate,
-        "completo": CompleteReport.generate,
-    }
-
     @classmethod
     def import_data(cls, file_path, report_type):
         report_by_file_type_lookup = {
@@ -30,13 +25,17 @@ class Inventory:
             print('Incorrect file extension. Must be "csv", "json" or "xml".')
             return None
 
-    @classmethod
-    def execute_report_method(cls, report_type, inventory):
-        if report_type not in cls.report_methods_lookup:
+    @staticmethod
+    def execute_report_method(report_type, inventory):
+        report_methods_lookup = {
+            "simples": SimpleReport.generate,
+            "completo": CompleteReport.generate,
+        }
+        if report_type not in report_methods_lookup:
             raise ValueError(
                 "Incorret report type. Must be 'complete' or 'simple"
             )
-        return cls.report_methods_lookup[report_type](inventory)
+        return report_methods_lookup[report_type](inventory)
 
     @classmethod
     def get_report_from_csv_file(cls, csv_file_path, report_type):
